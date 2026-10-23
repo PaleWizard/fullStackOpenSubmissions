@@ -66,12 +66,19 @@ const App = () => {
         .create(newContact)
         .then(returnedContact => {
           setPersons(persons.concat(returnedContact))
+          setMessage({
+            type: 'notification',
+            text: `Added ${newName}`
+          })
+        })
+        .catch(error =>{
+          console.log(error.response.data)
+          setMessage({
+            type: 'error',
+            text: `${error.response.data.error}`
+          })
         })
 
-        setMessage({
-          type: 'notification',
-          text: `Added ${newName}`
-        })
         setTimeout(() => {
           setMessage({type: null, text: null})
         }, 5000)
