@@ -18,33 +18,33 @@ mongoose.connect(url, { family: 4 })
 
 const personSchema = new mongoose.Schema({
   name: {
-        type: String,
-        minLength: 3,
-        required: true
-    },
+    type: String,
+    minLength: 3,
+    required: true
+  },
   number: String,
 })
 
 const Person = mongoose.model('Person', personSchema)
 
 if (process.argv.length < 4){
-    Person.find({}).then(result => {
-            console.log('Phonebook:')
-            result.forEach(person => {
-                console.log(`${person.name} ${person.number}`)
-        })
-    mongoose.connection.close()
+  Person.find({}).then(result => {
+    console.log('Phonebook:')
+    result.forEach(person => {
+      console.log(`${person.name} ${person.number}`)
     })
+    mongoose.connection.close()
+  })
 }
 
 else if (process.argv.length >= 4){
-    const person = new Person({
-        name: name,
-        number: number,
-    })
-    
-    person.save().then(result => {
-        console.log(`Added ${name} number ${number} to phonebook.`)
-        mongoose.connection.close()
-    })
+  const person = new Person({
+    name: name,
+    number: number,
+  })
+
+  person.save().then(() => {
+    console.log(`Added ${name} number ${number} to phonebook.`)
+    mongoose.connection.close()
+  })
 }
